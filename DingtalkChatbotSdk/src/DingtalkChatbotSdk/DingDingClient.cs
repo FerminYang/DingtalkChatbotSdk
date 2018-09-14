@@ -88,18 +88,18 @@ namespace DingtalkChatbotSdk
                 WReq.Method = "POST";
                 byte[] byteArray = Encoding.UTF8.GetBytes(data);
                 WReq.ContentType = "application/json; charset=utf-8";
-                using (var newStream = await WReq.GetRequestStreamAsync())
+                using (var newStream = await WReq.GetRequestStreamAsync().ConfigureAwait(false))
                 {
-                    await newStream.WriteAsync(byteArray, 0, byteArray.Length);
+                    await newStream.WriteAsync(byteArray, 0, byteArray.Length).ConfigureAwait(false);
                 }
-                WebResponse WResp = await WReq.GetResponseAsync();
+                WebResponse WResp = await WReq.GetResponseAsync().ConfigureAwait(false);
                 using (var stream = WResp.GetResponseStream())
                 {
                     if (stream != null)
                     {
                         using (var reader = new StreamReader(stream))
                         {
-                            result = await reader.ReadToEndAsync();
+                            result = await reader.ReadToEndAsync().ConfigureAwait(false);
                         }
                         
                     }
